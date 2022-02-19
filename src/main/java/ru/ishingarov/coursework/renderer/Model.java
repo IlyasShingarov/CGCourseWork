@@ -1,19 +1,22 @@
 package ru.ishingarov.coursework.renderer;
 
+import org.springframework.stereotype.Service;
+
+import javax.vecmath.Matrix4d;
 import javax.vecmath.Vector3d;
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Model {
-//    private static double[] vertices;
-//    private static int[] triangles;
-//    private static double[] vertexnormals;
-
     private ArrayList<Vector3d> vertices;
     private ArrayList<Vector3d> normals;
     private ArrayList<Face> faces;
+
+    public double[][] getRotation() {
+        return rotation;
+    }
+
+    private double[][] rotation = new  double[4][4];
 
     public Model(String filename) throws IOException {
         loadModel(filename);
@@ -24,7 +27,7 @@ public class Model {
         File objFile = new File(filename);
         FileReader fileReader = new FileReader(objFile);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String line = null;
+        String line;
         ArrayList<Vector3d> ALVertices = new ArrayList<>();
         ArrayList<Vector3d> ALNormals = new ArrayList<>();
         ArrayList<Face> ALFaces = new ArrayList<>();
@@ -51,7 +54,6 @@ public class Model {
                 int[] normInds = new int[3];
                 for (int i = 1; i < stringValues.length; ++i ) {
                     if (stringValues[i].length()==0) continue;
-//                    System.out.println("FSTR " + Arrays.toString(stringValues));
                     String[] faceValues = stringValues[i].split("/");
                     verInds[i - 1] = Integer.parseInt(faceValues[0]);
                     normInds[i - 1] = Integer.parseInt(faceValues[2]);
@@ -64,9 +66,24 @@ public class Model {
         vertices = ALVertices;
         normals = ALNormals;
         faces = ALFaces;
-//        System.out.println(ALVertices);
-//        System.out.println(ALNormals);
-//        System.out.println(ALFaces);
+    }
+
+    private static final Matrix4d r = new Matrix4d();
+    private static final Matrix4d res = new Matrix4d();
+
+    public static Matrix4d Rotate(double rx, double ry, double rz) {
+            r.rotX(rx);
+            res.rotY(ry);
+            res.mul(r);
+            r.rotZ(rz);
+            res.mul(r);
+            return res;
+    }
+
+    public void setRotation(Matrix4d rotMatrix) {
+        for (int i = 0; i < 4; i++) {
+            rotMatrix.getRow(i, rotation[i]);
+        }
     }
 
     public int getVertN() {
@@ -78,7 +95,6 @@ public class Model {
     }
 
     public Vector3d normal(int iface, int nthvert) {
-//        System.out.println(faces.get(iface));
         return normals.get(faces.get(iface).getVni()[nthvert] - 1);
     }
 

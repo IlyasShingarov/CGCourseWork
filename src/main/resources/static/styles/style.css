@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.viewport {
+    background: rgb(110, 110, 110);
+    width: 800px !important;
+    height: 800px !important;
+    margin: 2px;
+}
+
+.interferometer {
+    background: rgb(100, 39, 39);
+    width: 600px !important;
+    height: 600px !important;
+    margin: 2px;
+}
+
+#x_angle, #y_angle, #z_angle, #wavelength, #induction, #polaroid {
+    width: 3rem;
+    margin: 3px;
+}
+
+.zeemanForm {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}

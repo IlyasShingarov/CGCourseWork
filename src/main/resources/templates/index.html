@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zeeman</title>
+  <link rel="stylesheet" type="text/css" th:href="@{../static/styles/style.css}"/>
+</head>
+<body>
+  <div class="container">
+    <div class="leftContainer">
+      <div class="viewport" id="vp"></div>
+    </div>
+    <div class="rightContainer">
+      <div class="interferometer" id="interferometer"></div>
+      <div class="forms">
+        <div class="rotateForm">
+          <label for="x_angle">X:</label>
+          <input type="number" name="x_angle" id="x_angle" value="0">
+
+          <label for="y_angle">Y:</label>
+          <input type="number" name="y_angle" id="y_angle" value="0">
+
+          <label for="z_angle">Z:</label>
+          <input type="number" name="z_angle" id="z_angle" value="0">
+
+          <button id="rotate">Повернуть</button>
+        </div>
+        <div class="zeemanForm">
+          <label for="polaroid">Поляроид</label>
+          <input type="checkbox" name="forward" id="polaroid">
+
+          <label for="induction">B:</label>
+          <input type="number" name="induction" id="induction">
+
+          <label for="wavelength">&#955:</label>
+          <input type="number" name="wavelength" id="wavelength">
+        </div>
+        <button id="get_interf">Получить изображение</button>
+  </div>
+    </div>
+  </div>
+</body>
+<script src="../static/scripts/main.js"></script>
+</html>
